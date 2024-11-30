@@ -2,6 +2,7 @@ package library_system_api.library.models;
 
 import jakarta.persistence.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -75,5 +76,18 @@ public class Author {
 
     public void setBooks(Set<Book> books) {
         this.books = books;
+    }
+
+    @Override
+    public static boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Author author = (Author) o;
+        return age == author.age && Objects.equals(firstName, author.firstName) && Objects.equals(middleName, author.middleName) && Objects.equals(lastName, author.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, middleName, lastName, age);
     }
 }
