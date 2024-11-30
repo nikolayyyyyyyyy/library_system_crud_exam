@@ -24,10 +24,21 @@ public class Author {
     @Column(nullable = false)
     private int age;
 
+    @Column(nullable = false,unique = true)
+    private String email;
+
     @OneToMany(mappedBy = "author")
     private Set<Book> books;
 
     public Author() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public long getId() {
@@ -78,16 +89,4 @@ public class Author {
         this.books = books;
     }
 
-    @Override
-    public static boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Author author = (Author) o;
-        return age == author.age && Objects.equals(firstName, author.firstName) && Objects.equals(middleName, author.middleName) && Objects.equals(lastName, author.lastName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(firstName, middleName, lastName, age);
-    }
 }

@@ -22,7 +22,18 @@ public class Browing {
     @JoinColumn(name = "reader_id")
     private Reader reader;
 
+    @Column(name = "number_of_browing")
+    private String numberOfBrowing;
+
     public Browing() {
+    }
+
+    public String getNumberOfBrowing() {
+        return numberOfBrowing;
+    }
+
+    public void setNumberOfBrowing(String numberOfBrowing) {
+        this.numberOfBrowing = numberOfBrowing;
     }
 
     public long getId() {

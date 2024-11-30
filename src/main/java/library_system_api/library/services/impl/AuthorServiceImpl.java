@@ -2,9 +2,12 @@ package library_system_api.library.services.impl;
 import library_system_api.library.models.Author;
 import library_system_api.library.repositories.AuthorRepository;
 import library_system_api.library.services.AuthorService;
+import org.springframework.stereotype.Service;
+
 import java.util.HashSet;
 import java.util.Set;
 
+@Service
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
 
@@ -18,7 +21,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Author getAuthor(long id) {
+    public Author getAuthorById(long id) {
         return this.authorRepository
                 .findById(id)
                 .orElse(null);
@@ -31,7 +34,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void deleteAuthor(long id) {
+    public void deleteAuthorById(long id) {
         this.authorRepository.deleteById(id);
     }
 
@@ -41,8 +44,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public boolean hasAuthor(Author author) {
-        return this.authorRepository.findAll()
-                .stream().anyMatch(Author::equals);
+    public boolean hasAuthor(String email) {
+        return this.authorRepository.findByEmail(email) != null;
     }
 }

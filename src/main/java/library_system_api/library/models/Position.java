@@ -12,6 +12,7 @@ public class Position {
     private long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(unique = true,nullable = false)
     private PositionType positionType;
 
     @OneToMany(mappedBy = "position")

@@ -1,12 +1,14 @@
 package library_system_api.library.web;
+
+import library_system_api.library.exceptions.authorEx.AuthorNotFoundException;
+import library_system_api.library.exceptions.authorEx.EntityAlreadyExistInTheDatabaseException;
 import library_system_api.library.models.Author;
 import library_system_api.library.models.dtos.AuthorDTO;
 import library_system_api.library.services.AuthorService;
 import org.modelmapper.ModelMapper;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/authors")
@@ -19,21 +21,64 @@ public class AuthorController {
         this.modelMapper = modelMapper;
     }
 
-    @PostMapping
-    public String createAuthor(@RequestBody AuthorDTO model){
-        if(this.authorService.hasAuthor(this.modelMapper.map(model, Author.class))){
+    @PostMapping()
+    public String createAuthor(@RequestBody AuthorDTO authorDTO){
+        if(this.authorService.hasAuthor(authorDTO.getEmail())){
 
-            throw new IllegalArgumentException("Author already exist in database!");
+            throw new EntityAlreadyExistInTheDatabaseException("Entity is already added!");
+        }
+        this.authorService.createAuthor(this.modelMapper.map(authorDTO, Author.class));
+        return "Author created successfully!";
+    }
+
+    @PutMapping("{id}")
+    public String updateAuthor(@PathVariable(name = "id")long id,
+                              @RequestBody AuthorDTO authorDTO){
+        if(this.authorService.getAuthorById(id) == null){
+
+            throw new AuthorNotFoundException("Author does not exist in the database!");
+        }
+        Author author = this.authorService.getAuthorById(id);
+        author.setAge(authorDTO.getAge());
+        author.setFirstName(authorDTO.getFirstName());
+        author.setMiddleName(authorDTO.getMiddleName());
+        author.setLastName(authorDTO.getLastName());
+        author.setEmail(authorDTO.getEmail());
+
+        this.authorService.updateAuthor(author);
+        return "Author updated successfully!";
+    }
+
+    @DeleteMapping("{id}")
+    public String deleteAuthor(@PathVariable(name = "id")long id){
+        if(this.authorService.getAuthorById(id) == null){
+
+            throw new AuthorNotFoundException("Author does not exist in the database!");
         }
 
-        if(model.getAge() <= 0
-                || model.getFirstName() == null
-                || model.getLastName() == null
-                || model.getMiddleName() == null){
+        this.authorService.deleteAuthorById(id);
+        return "Author deleted successfully!";
+    }
 
-            throw new IllegalArgumentException("Model not correct!");
+    @GetMapping("{id}")
+    public AuthorDTO getAuthor(@PathVariable(name = "id")long id){
+        if(this.authorService.getAuthorById(id) == null){
+
+            throw new AuthorNotFoundException("Author does not exist in the database!");
         }
 
-        return "";
+        return this.modelMapper.map(this.authorService.getAuthorById(id), AuthorDTO.class);
+    }
+
+    @GetMapping
+    public Set<AuthorDTO> getAllAuthors(){
+        if((long)this.authorService.getAllAuthors().size() == 0){
+
+            throw new AuthorNotFoundException("Authors table empty!");
+        }
+        return this.authorService.getAllAuthors()
+                .stream()
+                .map(author -> this.modelMapper.map(author, AuthorDTO.class))
+                .collect(Collectors.toSet());
     }
 }

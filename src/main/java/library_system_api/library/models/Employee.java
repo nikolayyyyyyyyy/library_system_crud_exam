@@ -27,7 +27,18 @@ public class Employee {
     @JoinColumn(name = "position_id")
     private Position position;
 
+    @Column(nullable = false,unique = true)
+    public String email;
+
     public Employee() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Set<Browing> getBrowings() {

@@ -13,6 +13,7 @@ public class Genre {
     private long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(unique = true,nullable = false)
     private GenreType genreType;
 
     @OneToMany(mappedBy = "genre")

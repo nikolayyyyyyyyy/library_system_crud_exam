@@ -23,6 +23,9 @@ public class Reader {
     @OneToMany(mappedBy = "reader")
     private Set<Browing> browings;
 
+    @Column(nullable = false,unique = true)
+    private String email;
+
     public Reader() {
     }
 

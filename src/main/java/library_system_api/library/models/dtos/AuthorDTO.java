@@ -4,9 +4,18 @@ public class AuthorDTO {
     private String firstName;
     private String middleName;
     private String lastName;
+    private String email;
     private int age;
 
     public AuthorDTO() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getFirstName() {

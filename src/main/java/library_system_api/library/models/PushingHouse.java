@@ -13,6 +13,7 @@ public class PushingHouse {
     private long id;
 
     @Enumerated(EnumType.STRING)
+    @Column(unique = true,nullable = false)
     private PushingHouseName pushingHouse;
 
     @OneToMany(mappedBy = "pushingHouse")
