@@ -14,7 +14,7 @@ public class PushingHouse {
 
     @Enumerated(EnumType.STRING)
     @Column(unique = true,nullable = false)
-    private PushingHouseName pushingHouse;
+    private PushingHouseName pushingHouseName;
 
     @OneToMany(mappedBy = "pushingHouse")
     private Set<Book> books;
@@ -30,11 +30,11 @@ public class PushingHouse {
         this.id = id;
     }
 
-    public PushingHouseName getPushingHouse() {
-        return pushingHouse;
+    public PushingHouseName getPushingHouseName() {
+        return pushingHouseName;
     }
 
-    public void setPushingHouse(PushingHouseName pushingHouse) {
-        this.pushingHouse = pushingHouse;
+    public void setPushingHouseName(PushingHouseName pushingHouse) {
+        this.pushingHouseName = pushingHouse;
     }
 }
