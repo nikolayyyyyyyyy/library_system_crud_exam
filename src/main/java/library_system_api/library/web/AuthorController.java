@@ -1,7 +1,7 @@
 package library_system_api.library.web;
 
-import library_system_api.library.exceptions.authorEx.AuthorNotFoundException;
-import library_system_api.library.exceptions.authorEx.EntityAlreadyExistInTheDatabaseException;
+import library_system_api.library.exceptions.EntityNotFoundInDatabaseException;
+import library_system_api.library.exceptions.EntityAlreadyExistInTheDatabaseException;
 import library_system_api.library.models.Author;
 import library_system_api.library.models.dtos.AuthorDTO;
 import library_system_api.library.services.AuthorService;
@@ -36,7 +36,7 @@ public class AuthorController {
                               @RequestBody AuthorDTO authorDTO){
         if(this.authorService.getAuthorById(id) == null){
 
-            throw new AuthorNotFoundException("Author does not exist in the database!");
+            throw new EntityNotFoundInDatabaseException("Author does not exist in the database!");
         }
         Author author = this.authorService.getAuthorById(id);
         author.setAge(authorDTO.getAge());
@@ -53,7 +53,7 @@ public class AuthorController {
     public String deleteAuthor(@PathVariable(name = "id")long id){
         if(this.authorService.getAuthorById(id) == null){
 
-            throw new AuthorNotFoundException("Author does not exist in the database!");
+            throw new EntityNotFoundInDatabaseException("Author does not exist in the database!");
         }
 
         this.authorService.deleteAuthorById(id);
@@ -61,20 +61,20 @@ public class AuthorController {
     }
 
     @GetMapping("{id}")
-    public AuthorDTO getAuthor(@PathVariable(name = "id")long id){
+    public AuthorDTO readAuthor(@PathVariable(name = "id")long id){
         if(this.authorService.getAuthorById(id) == null){
 
-            throw new AuthorNotFoundException("Author does not exist in the database!");
+            throw new EntityNotFoundInDatabaseException("Author does not exist in the database!");
         }
 
         return this.modelMapper.map(this.authorService.getAuthorById(id), AuthorDTO.class);
     }
 
     @GetMapping
-    public Set<AuthorDTO> getAllAuthors(){
-        if((long)this.authorService.getAllAuthors().size() == 0){
+    public Set<AuthorDTO> readAllAuthors(){
+        if(this.authorService.getAllAuthors().isEmpty()){
 
-            throw new AuthorNotFoundException("Authors table empty!");
+            throw new EntityNotFoundInDatabaseException("Authors table empty!");
         }
         return this.authorService.getAllAuthors()
                 .stream()
