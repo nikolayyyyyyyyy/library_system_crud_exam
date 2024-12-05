@@ -21,6 +21,9 @@ public class Book {
     @Column(nullable = false)
     private double price;
 
+    @Column(name = "is_present",nullable = false)
+    private boolean isPresent;
+
     @ManyToOne
     @JoinColumn(name = "author_id")
     private Author author;
@@ -70,6 +73,14 @@ public class Book {
 
     public double getPrice() {
         return price;
+    }
+
+    public boolean isPresent() {
+        return isPresent;
+    }
+
+    public void setPresent(boolean present) {
+        isPresent = present;
     }
 
     public void setPrice(double price) {
