@@ -1,7 +1,6 @@
 package library_system_api.library.models;
-
 import jakarta.persistence.*;
-
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -22,8 +21,11 @@ public class Browing {
     @JoinColumn(name = "reader_id")
     private Reader reader;
 
-    @Column(name = "number_of_browing")
-    private String numberOfBrowing;
+    @Column(name = "date_of_loan",nullable = false)
+    private LocalDate dateOfLoan;
+
+    @Column(nullable = false)
+    private LocalDate term;
 
     @Column(name = "is_returned",nullable = false)
     private boolean isReturned;
@@ -39,12 +41,20 @@ public class Browing {
         isReturned = returned;
     }
 
-    public String getNumberOfBrowing() {
-        return numberOfBrowing;
+    public LocalDate getDateOfLoan() {
+        return dateOfLoan;
     }
 
-    public void setNumberOfBrowing(String numberOfBrowing) {
-        this.numberOfBrowing = numberOfBrowing;
+    public void setDateOfLoan(LocalDate dateOfLoan) {
+        this.dateOfLoan = dateOfLoan;
+    }
+
+    public LocalDate getTerm() {
+        return term;
+    }
+
+    public void setTerm(LocalDate term) {
+        this.term = term;
     }
 
     public long getId() {

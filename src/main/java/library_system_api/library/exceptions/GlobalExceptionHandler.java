@@ -18,4 +18,10 @@ public class GlobalExceptionHandler {
     {
         return new ResponseEntity<>(entityAlreadyExistInTheDatabaseException.getMessage(),HttpStatus.ALREADY_REPORTED);
     }
+
+    @ExceptionHandler(EntityHaveNotReturnedBrowingsException.class)
+    public ResponseEntity<String> handleEntityHaveNotReturnedBrowingsException(EntityHaveNotReturnedBrowingsException haveNotReturnedBrowingsException)
+    {
+        return new ResponseEntity<>(haveNotReturnedBrowingsException.getMessage(),HttpStatus.FORBIDDEN);
+    }
 }

@@ -54,13 +54,7 @@ public class BookController {
         }
 
         Book book = new Book();
-        book.setName(bookDTO.getName());
-        book.setPresent(bookDTO.isPresent());
-        book.setPrice(bookDTO.getPrice());
-        book.setDateOfIssue(bookDTO.getDateOfIssue());
-        book.setPushingHouse(this.pushingHouseService.getPushingHouseById(bookDTO.getPushingHouseId()));
-        book.setGenre(this.genreService.getGenreById(bookDTO.getGenreId()));
-        book.setAuthor(this.authorService.getAuthorById(bookDTO.getAuthorId()));
+        mapBook(bookDTO, book);
 
         this.bookService.createBook(book);
         return "Book created successfully!";
@@ -90,15 +84,9 @@ public class BookController {
         }
 
         Book book = this.bookService.readBook(id);
-        book.setName(bookDTO.getName());
-        book.setPresent(bookDTO.isPresent());
-        book.setPrice(bookDTO.getPrice());
-        book.setDateOfIssue(bookDTO.getDateOfIssue());
-        book.setPushingHouse(this.pushingHouseService.getPushingHouseById(bookDTO.getPushingHouseId()));
-        book.setGenre(this.genreService.getGenreById(bookDTO.getGenreId()));
-        book.setAuthor(this.authorService.getAuthorById(bookDTO.getAuthorId()));
+        mapBook(bookDTO, book);
 
-        this.bookService.createBook(book);
+        this.bookService.updateBook(book);
         return "Book updated successfully!";
     }
 
@@ -133,5 +121,15 @@ public class BookController {
                 .stream()
                 .map(b -> modelMapper.map(b, GetBookDTO.class))
                 .collect(Collectors.toSet());
+    }
+
+    private void mapBook(BookDTO bookDTO, Book book) {
+        book.setName(bookDTO.getName());
+        book.setPresent(bookDTO.isPresent());
+        book.setPrice(bookDTO.getPrice());
+        book.setDateOfIssue(bookDTO.getDateOfIssue());
+        book.setPushingHouse(this.pushingHouseService.getPushingHouseById(bookDTO.getPushingHouseId()));
+        book.setGenre(this.genreService.getGenreById(bookDTO.getGenreId()));
+        book.setAuthor(this.authorService.getAuthorById(bookDTO.getAuthorId()));
     }
 }
