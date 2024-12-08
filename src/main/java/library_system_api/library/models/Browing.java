@@ -25,7 +25,18 @@ public class Browing {
     @Column(name = "number_of_browing")
     private String numberOfBrowing;
 
+    @Column(name = "is_returned",nullable = false)
+    private boolean isReturned;
+
     public Browing() {
+    }
+
+    public boolean isReturned() {
+        return isReturned;
+    }
+
+    public void setReturned(boolean returned) {
+        isReturned = returned;
     }
 
     public String getNumberOfBrowing() {

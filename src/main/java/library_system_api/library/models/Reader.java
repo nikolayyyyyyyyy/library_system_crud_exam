@@ -1,7 +1,5 @@
 package library_system_api.library.models;
-
 import jakarta.persistence.*;
-
 import java.util.Set;
 
 @Entity
@@ -20,17 +18,25 @@ public class Reader {
     @Column(name = "last_name",nullable = false,length = 50)
     private String lastName;
 
-    @OneToMany(mappedBy = "reader")
-    private Set<Browing> browings;
-
     @Column(nullable = false,unique = true)
     private String email;
+
+    @OneToMany(mappedBy = "reader")
+    private Set<Browing> browings;
 
     public Reader() {
     }
 
     public Set<Browing> getBrowings() {
         return browings;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setBrowings(Set<Browing> browings) {
