@@ -37,11 +37,7 @@ public class EmployeeController {
         }
 
         Employee employee = new Employee();
-        employee.setFirstName(employeeDTO.getFirstName());
-        employee.setMiddleName(employeeDTO.getMiddleName());
-        employee.setLastName(employeeDTO.getLastName());
-        employee.setEmail(employeeDTO.getEmail());
-        employee.setPosition(this.positionService.getPositionById(employeeDTO.getPositionId()));
+        mapEmployee(employeeDTO, employee);
 
         this.employeeService.createEmployee(employee);
         return "Employee created successfully!";
@@ -61,11 +57,7 @@ public class EmployeeController {
         }
 
         Employee employee = this.employeeService.readEmployee(id);
-        employee.setFirstName(employeeDTO.getFirstName());
-        employee.setMiddleName(employeeDTO.getMiddleName());
-        employee.setLastName(employeeDTO.getLastName());
-        employee.setEmail(employeeDTO.getEmail());
-        employee.setPosition(this.positionService.getPositionById(employeeDTO.getPositionId()));
+        mapEmployee(employeeDTO, employee);
 
         this.employeeService.updateEmployee(employee);
         return "Employee updated successfully!";
@@ -103,5 +95,13 @@ public class EmployeeController {
                 .stream()
                 .map(e -> modelMapper.map(e, GetEmployeeDTO.class))
                 .collect(Collectors.toSet());
+    }
+
+    private void mapEmployee(EmployeeDTO employeeDTO, Employee employee) {
+        employee.setFirstName(employeeDTO.getFirstName());
+        employee.setMiddleName(employeeDTO.getMiddleName());
+        employee.setLastName(employeeDTO.getLastName());
+        employee.setEmail(employeeDTO.getEmail());
+        employee.setPosition(this.positionService.getPositionById(employeeDTO.getPositionId()));
     }
 }

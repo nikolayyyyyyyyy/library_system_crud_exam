@@ -8,8 +8,6 @@ public class BrowingDTO {
 
     private long readerId;
 
-    private String numberOfBrowing;
-
     private LocalDate dateOfLoan;
 
     private LocalDate term;
@@ -34,14 +32,6 @@ public class BrowingDTO {
 
     public void setReaderId(long readerId) {
         this.readerId = readerId;
-    }
-
-    public String getNumberOfBrowing() {
-        return numberOfBrowing;
-    }
-
-    public void setNumberOfBrowing(String numberOfBrowing) {
-        this.numberOfBrowing = numberOfBrowing;
     }
 
     public LocalDate getDateOfLoan() {
